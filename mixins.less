@@ -4,10 +4,135 @@
 	
 	Helpers to pump out CSS
 	
+	* Flexbox
+	* Font Icon
+	* Map Crop - more of a utility than a mixin
 	* Fill Space
 	* Scrollable areas
 	* Inline align
 */
+
+
+
+
+
+/*
+	Flexbox
+	====================
+
+	Setup vendor prefixes
+
+	Usage
+	--------------------
+	
+	.wrapper {
+		&:extend(.flexbox all);
+	}
+
+	.item {
+		.flex(1 200px);
+		.flexorder(2);
+	}
+
+*/
+
+.flexbox() {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+}
+
+.flex(@values) {
+	-webkit-box-flex: @values;
+	-moz-box-flex: @values;
+	-webkit-flex: @values;
+	-ms-flex: @values;
+	flex: @values;
+}
+
+.flexorder(@val) {
+	-webkit-box-ordinal-group: @val;
+	-moz-box-ordinal-group: @val;
+	-ms-flex-order: @val;
+	-webkit-order: @val;
+	order: @val;
+}
+
+
+
+
+/*
+	Fonticon
+	====================
+
+	Use with your favourite icon font family. Apply to pseudo elements (:before, :after)
+
+	Usage
+	--------------------
+	
+	.icon {
+		...
+		
+		&:after {
+			.fonticon(#ff0000, '\2665', 2em);
+		}
+	}
+	
+*/
+.fonticon(@color, @content, @size) {
+	color: @color;
+	content: @content;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	font-size: @size;
+	font-family: '...';
+	height: auto;
+	line-height: 1;
+	speak: none;
+	text-transform: none;
+}
+
+
+
+
+/*
+	Map Crop
+	====================
+
+	For responsive Google map images - changing the proportions of static Google
+	map with "max-width: 100%" results in illegible place names.
+	
+	The container ".mapcrop" behaves like a mask so the image is free to extend
+	left and right inside it.
+
+	Usage
+	--------------------
+	
+	<div class="mapcrop mapcrop--md">
+		<img class="mapcrop__map" width=640 height=160 src="..." alt="...">
+	</div>
+
+*/
+
+.mapcrop {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+.mapcrop--sm { height: 80px; }
+.mapcrop--md { height: 160px; }
+.mapcrop--lg { height: 320px; }
+
+.mapcrop__map {
+	left: 50%;
+	position: absolute;
+	-webkit-transform: translate(-50%, 0);
+			-ms-transform: translate(-50%, 0);
+					transform: translate(-50%, 0);
+}
 
 
 
@@ -16,13 +141,19 @@
   ====================
 
   Element will fill all available vertical and horizontal space provided by it's parent
-
-  Notes
-  --------------------
+  
   * Apply attribute "auto" to either top / bottom if the element has a height
   * Apply attribute "auto" to either left / right if the element has a width
 
+	Usage
+	--------------------
+	
+	.modal {
+		.fill-space();
+	}
+
 */
+
 .fill-space(@top:0,@right:0,@bottom:0,@left:0) {
 	position: absolute;
 	bottom: @bottom;
@@ -36,15 +167,20 @@
 
 
 /*
-  Scrollable
-  ====================
+	Scrollable
+	====================
 
-  Areas will sometimes lose their ability to scroll when manipulated, particularly iOS.
-  This mixin will re-introduce correct scrolling behaviour
+	Areas will sometimes lose their ability to scroll when manipulated, particularly iOS.
+	This mixin will re-introduce correct scrolling behaviour
+	
+	* Use the variables "x,y" to indicate which direction you want to be able to scroll
 
-  Notes
-  --------------------
-  * Use the variables "x,y" to indicate which direction you want to be able to scroll
+	Usage
+	--------------------
+	
+	.wrapper {
+		.scrollable(y);
+	}
 
 */
 .scrollable(@direction) {
@@ -73,15 +209,29 @@
 	====================
 
 	Element will align with it's siblings along a lateral axis
-
-	Notes
-	====================
+	
 	* Defaults to middle
-	* Other options
-		- baseline / sub / super / top / text-top / middle / bottom / text-bottom / inherit
+	* Other options (baseline / sub / super / top / text-top / middle / bottom / text-bottom / inherit)
+
+	Usage
+	--------------------
+	
+	.button {
+		.inline-align(text-top);
+	}
 
 */
+
 .inline-align(@alignment: middle) {
 	display: inline-block;
 	vertical-align: @alignment;
 }
+
+
+
+
+
+
+
+
+
